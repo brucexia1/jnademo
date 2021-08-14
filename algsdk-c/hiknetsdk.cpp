@@ -8,12 +8,18 @@ NET_DVR_API LONG __stdcall NET_DVR_StartRemoteConfig(LONG lUserID, DWORD dwComma
     printf("lUserID[%ld] dwCommand[%d] lpInBuffer[%p] dwInBufferLen[%d] cbStateCallback[%p] pUserData[%p]\n", lUserID, dwCommand, lpInBuffer, dwInBufferLen, cbStateCallback, pUserData);
 
     if (NET_DVR_GET_TRAFFIC_DATA == dwCommand) {
+        if (dwInBufferLen != sizeof(NET_DVR_TRAFFIC_DATA_QUERY_COND)) {
+            printf("sizeof(NET_DVR_TRAFFIC_DATA_QUERY_COND) %ld != inbuflen %ld", 
+                sizeof(NET_DVR_TRAFFIC_DATA_QUERY_COND), dwInBufferLen);
+            return -1;
+        }
         NET_DVR_TRAFFIC_DATA_QUERY_COND* pCond = (NET_DVR_TRAFFIC_DATA_QUERY_COND*)lpInBuffer;
         printf("dwChannel %d \n", pCond->dwChannel);
         printf("dwPlateType %d \n", pCond->dwPlateType);
         printf("dwPlateColor %d \n", pCond->dwPlateColor);
         printf("dwVehicleType %d \n", pCond->dwVehicleType);
         printf("dwQueryCond %d \n", pCond->dwQueryCond);
+        printf("dwSize %d \n", pCond->dwSize);
 
         NET_DVR_TIME_V30 sat = pCond->struEndTime;
         NET_DVR_TIME_V30 ent = pCond->struEndTime;
