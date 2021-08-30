@@ -27,5 +27,5 @@
 >    at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:88)
 >```
 
-这是应为AlgSDK.dll是使用VisualStudio2019开发，依赖VS2019C++的一些dll库，具体可以使用"depends.exe"查找依赖哪些dll，然后将这些dll拷贝到和jnademo-1.0.0.jar在同一级目录下，重新运行jar包即可成功。
+这是因为AlgSDK.dll是使用VisualStudio2019开发，依赖VS2019C++的一些dll库，具体可以使用"depends.exe"查找依赖哪些dll，然后将这些dll拷贝到和jnademo-1.0.0.jar在同一级目录下，重新运行jar包即可成功。
 
