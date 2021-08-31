@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,17 +58,20 @@ public class Application {
     private static class GetTrafficDataCallBack implements AlgSDK.FRemoteConfigCallback {
         @Override
         public void invoke(int dwType, AlgSDK.NET_DVR_TRAFFIC_DATA_QUERY_RESULT lpBuffer, int dwBufLen, Pointer pUserData) {
+            System.out.println("111");
             if (dwType == NET_DVR_TRAFFIC_DATA_QUERY_RESULT_STATUS) {
+                System.out.println("222");
                 if (dwBufLen < lpBuffer.size()) { return; }
+                System.out.println("333");
                 AlgSDK.NET_DVR_TIME_V30 time =  lpBuffer.struTrafficPic[0].struAbsTime;
-                log.info("车牌号-" + new String(lpBuffer.sLicense, Charset.forName("GBK")).replaceAll("\\u0000","")
+                System.out.println("车牌号-" + new String(lpBuffer.sLicense, Charset.forName("GBK")).replaceAll("\\u0000","")
                         + " |通道号-" + intToBit(lpBuffer.dwChannel) + " |车牌颜色-"
                         + dwPlateColorStr(lpBuffer.dwPlateColor) + " |车道号-" + lpBuffer.byLaneNo
                         + " |抓拍时间-" + String.format("%02d", time.wYear) + "-" + String.format("%02d", time.byMonth) + "-" + String.format("%02d", time.byDay) + " "
                         + String.format("%02d", time.byHour)+":"+String.format("%02d", time.byMinute)+":"+String.format("%02d", time.bySecond)
                         + " |图片名称-" + (lpBuffer.struTrafficPic.length>0?byteToString(lpBuffer.struTrafficPic[0].szPicName):"无"));
             } else if (dwType == NET_SDK_CALLBACK_TYPE_STATUS && lpBuffer.dwSize == NET_SDK_CALLBACK_FINISH_STATUS) {
-                log.info("获取交通数据完成");
+                System.out.println("获取交通数据完成");
             }
         }
     }

@@ -7,7 +7,7 @@ import com.sun.jna.Structure;
 import com.sun.jna.win32.StdCallLibrary;
 import lombok.Data;
 
-public interface AlgSDK extends Library {
+public interface AlgSDK extends StdCallLibrary {
     // JNA 为 dll 名称
     AlgSDK INSTANCE = Native.load("AlgSDK", AlgSDK.class);
 
@@ -353,7 +353,7 @@ public interface AlgSDK extends Library {
         public NET_DVR_TRAFFIC_PICTURE_PARAM[] struTrafficPic = new NET_DVR_TRAFFIC_PICTURE_PARAM[MAX_TRAFFIC_PICTURE_NUM/*8*/];
     }
 
-    public static interface FRemoteConfigCallback extends StdCallLibrary.StdCallCallback {
+    public static interface FRemoteConfigCallback extends StdCallCallback {
         public void invoke(int dwType, NET_DVR_TRAFFIC_DATA_QUERY_RESULT lpBuffer, int dwBufLen, Pointer pUserData);
     }
 
